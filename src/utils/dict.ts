@@ -239,5 +239,9 @@ export enum DICT_TYPE {
   IOT_PRODUCT_FUNCTION_TYPE = 'iot_product_function_type', // IOT 产品功能类型
   IOT_DATA_TYPE = 'iot_data_type', // IOT 数据类型
   IOT_UNIT_TYPE = 'iot_unit_type', // IOT 单位类型
-  IOT_RW_TYPE = 'iot_rw_type' // IOT 读写类型
+  IOT_RW_TYPE = 'iot_rw_type', // IOT 读写类型
+
+  // ========== lfpath模块  ==========
+  LFPATH_EDUCATION_LEVEL = 'lfpath_education_level', // fpath 办学层次
+  LFPATH_EDUCATION_SYSTEM = 'lfpath_education_system' //办学体制
 }
