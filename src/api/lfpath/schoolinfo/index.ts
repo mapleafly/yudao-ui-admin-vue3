@@ -42,4 +42,14 @@ export const SchoolInfoApi = {
   exportSchoolInfo: async (params) => {
     return await request.download({ url: `/lfpath/school-info/export-excel`, params })
   },
-}
+
+  // 导入高校信息 Excel
+  importSchoolInfo: async (formData: FormData) => {
+    return await request.post({ url: `/lfpath/school-info/import`, data: formData })
+  },
+
+  // 下载高校信息导入模板
+  importSchoolInfoTemplate: async () => {
+    return await request.download({ url: `/lfpath/school-info/get-import-template` })
+  },
+}

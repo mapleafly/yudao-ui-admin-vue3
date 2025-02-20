@@ -97,6 +97,14 @@
           <Icon icon="ep:plus" class="mr-5px" /> 新增
         </el-button>
         <el-button
+          type="warning"
+          plain
+          @click="handleImport"
+          v-hasPermi="['lfpath:school-info:import']"
+        >
+          <Icon icon="ep:upload"  class="mr-5px" /> 导入
+        </el-button>
+        <el-button
           type="success"
           plain
           @click="handleExport"
@@ -166,6 +174,8 @@
 
   <!-- 表单弹窗：添加/修改 -->
   <SchoolInfoForm ref="formRef" @success="getList" />
+  <!-- 高校信息导入对话框 -->
+  <SchoolInfoImportForm ref="importFormRef" @success="getList" />
 </template>
 
 <script setup lang="ts">
@@ -174,6 +184,7 @@ import { dateFormatter } from '@/utils/formatTime'
 import download from '@/utils/download'
 import { SchoolInfoApi, SchoolInfoVO } from '@/api/lfpath/schoolinfo'
 import SchoolInfoForm from './SchoolInfoForm.vue'
+import SchoolInfoImportForm from "./SchoolInfoImportForm.vue";
 
 /** 高校信息 列表 */
 defineOptions({ name: 'SchoolInfo' })
@@ -255,6 +266,14 @@ const handleExport = async () => {
     exportLoading.value = false
   }
 }
+
+
+/** 用户导入 */
+const importFormRef = ref()
+const handleImport = () => {
+  importFormRef.value.open()
+}
+
 
 /** 初始化 **/
 onMounted(() => {
