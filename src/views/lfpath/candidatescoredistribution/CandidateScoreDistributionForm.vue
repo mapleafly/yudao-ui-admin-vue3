@@ -17,15 +17,24 @@
         <el-input v-model="formData.cumulativeCount" placeholder="请输入累计人数" />
       </el-form-item>
       <el-form-item label="省份" prop="province">
-        <el-input v-model="formData.province" placeholder="请输入省份" />
+        <el-select v-model="formData.province" placeholder="请选择省份">
+          <el-option
+            v-for="dict in getStrDictOptions(DICT_TYPE.PROVINCES)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="年份" prop="year">
-        <el-date-picker
-          v-model="formData.year"
-          type="year"
-          value-format="x"
-          placeholder="选择年份"
-        />
+        <el-select v-model="formData.year" placeholder="请选择年份">
+          <el-option
+            v-for="dict in getStrDictOptions(DICT_TYPE.LFPATH_YEARS)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -35,6 +44,7 @@
   </Dialog>
 </template>
 <script setup lang="ts">
+import { getStrDictOptions, DICT_TYPE } from '@/utils/dict'
 import { CandidateScoreDistributionApi, CandidateScoreDistributionVO } from '@/api/lfpath/candidatescoredistribution'
 
 /** 考生分数分布 表单 */
@@ -59,8 +69,8 @@ const formRules = reactive({
   score: [{ required: true, message: '分数不能为空', trigger: 'blur' }],
   segmentCount: [{ required: true, message: '本段人数不能为空', trigger: 'blur' }],
   cumulativeCount: [{ required: true, message: '累计人数不能为空', trigger: 'blur' }],
-  province: [{ required: true, message: '省份不能为空', trigger: 'blur' }],
-  year: [{ required: true, message: '年份不能为空', trigger: 'blur' }],
+  province: [{ required: true, message: '省份不能为空', trigger: 'change' }],
+  year: [{ required: true, message: '年份不能为空', trigger: 'change' }],
 })
 const formRef = ref() // 表单 Ref
 

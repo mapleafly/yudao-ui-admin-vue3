@@ -243,5 +243,7 @@ export enum DICT_TYPE {
 
   // ========== lfpath模块  ==========
   LFPATH_EDUCATION_LEVEL = 'lfpath_education_level', // fpath 办学层次
-  LFPATH_EDUCATION_SYSTEM = 'lfpath_education_system' //办学体制
+  LFPATH_EDUCATION_SYSTEM = 'lfpath_education_system' ,//办学体制
+  PROVINCES = 'provinces', // 省份
+  LFPATH_YEARS = 'lfpath_years'// 年份
 }

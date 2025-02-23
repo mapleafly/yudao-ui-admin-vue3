@@ -18,23 +18,34 @@
         />
       </el-form-item>
       <el-form-item label="省份" prop="province">
-        <el-input
+        <el-select
           v-model="queryParams.province"
-          placeholder="请输入省份"
+          placeholder="请选择省份"
           clearable
-          @keyup.enter="handleQuery"
           class="!w-240px"
-        />
+        >
+          <el-option
+            v-for="dict in getStrDictOptions(DICT_TYPE.PROVINCES)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="年份" prop="year">
-        <el-date-picker
+        <el-select
           v-model="queryParams.year"
-          value-format="YYYY-MM-DD"
-          type="date"
-          placeholder="选择年份"
+          placeholder="请选择年份"
           clearable
           class="!w-240px"
-        />
+        >
+          <el-option
+            v-for="dict in getStrDictOptions(DICT_TYPE.LFPATH_YEARS)"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button @click="handleQuery"><Icon icon="ep:search" class="mr-5px" /> 搜索</el-button>
@@ -67,14 +78,16 @@
       <el-table-column label="分数" align="center" prop="score" />
       <el-table-column label="本段人数" align="center" prop="segmentCount" />
       <el-table-column label="累计人数" align="center" prop="cumulativeCount" />
-      <el-table-column label="省份" align="center" prop="province" />
-      <el-table-column
-        label="年份"
-        align="center"
-        prop="year"
-        :formatter="dateFormatterForYear"
-        width="180px"
-      />
+      <el-table-column label="省份" align="center" prop="province">
+        <template #default="scope">
+          <dict-tag :type="DICT_TYPE.PROVINCES" :value="scope.row.province" />
+        </template>
+      </el-table-column>
+      <el-table-column label="年份" align="center" prop="year">
+        <template #default="scope">
+          <dict-tag :type="DICT_TYPE.LFPATH_YEARS" :value="scope.row.year" />
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" min-width="120px">
         <template #default="scope">
           <el-button
@@ -110,7 +123,7 @@
 </template>
 
 <script setup lang="ts">
-import {dateFormatter, dateFormatterForYear} from '@/utils/formatTime'
+import { getStrDictOptions, DICT_TYPE } from '@/utils/dict'
 import download from '@/utils/download'
 import { CandidateScoreDistributionApi, CandidateScoreDistributionVO } from '@/api/lfpath/candidatescoredistribution'
 import CandidateScoreDistributionForm from './CandidateScoreDistributionForm.vue'
@@ -130,7 +143,6 @@ const queryParams = reactive({
   score: [],
   province: undefined,
   year: undefined,
-  year: [],
 })
 const queryFormRef = ref() // 搜索的表单
 const exportLoading = ref(false) // 导出的加载中

@@ -7,7 +7,7 @@ export interface CandidateScoreDistributionVO {
   segmentCount: number // 本段人数
   cumulativeCount: number // 累计人数
   province: string // 省份
-  year: Date // 年份
+  year: string // 年份
 }
 
 // 考生分数分布 API
