@@ -8,15 +8,6 @@
       :inline="true"
       label-width="68px"
     >
-      <el-form-item label="分数" prop="score">
-        <el-input
-          v-model="queryParams.score"
-          placeholder="请输入分数"
-          clearable
-          @keyup.enter="handleQuery"
-          class="!w-240px"
-        />
-      </el-form-item>
       <el-form-item label="省份" prop="province">
         <el-select
           v-model="queryParams.province"
@@ -57,6 +48,14 @@
           v-hasPermi="['lfpath:candidate-score-distribution:create']"
         >
           <Icon icon="ep:plus" class="mr-5px" /> 新增
+        </el-button>
+        <el-button
+          type="warning"
+          plain
+          @click="handleImport"
+          v-hasPermi="['lfpath:candidate-score-distribution:import']"
+        >
+          <Icon icon="ep:upload" class="mr-5px" /> 导入
         </el-button>
         <el-button
           type="success"
@@ -120,6 +119,8 @@
 
   <!-- 表单弹窗：添加/修改 -->
   <CandidateScoreDistributionForm ref="formRef" @success="getList" />
+  <!-- 导入表单弹窗 -->
+  <CandidateScoreDistributionImportForm ref="importFormRef" @success="getList" />
 </template>
 
 <script setup lang="ts">
@@ -127,6 +128,7 @@ import { getStrDictOptions, DICT_TYPE } from '@/utils/dict'
 import download from '@/utils/download'
 import { CandidateScoreDistributionApi, CandidateScoreDistributionVO } from '@/api/lfpath/candidatescoredistribution'
 import CandidateScoreDistributionForm from './CandidateScoreDistributionForm.vue'
+import CandidateScoreDistributionImportForm from './CandidateScoreDistributionImportForm.vue' // 添加导入表单组件引用
 
 /** 考生分数分布 列表 */
 defineOptions({ name: 'CandidateScoreDistribution' })
@@ -140,12 +142,12 @@ const total = ref(0) // 列表的总页数
 const queryParams = reactive({
   pageNo: 1,
   pageSize: 10,
-  score: [],
   province: undefined,
   year: undefined,
 })
 const queryFormRef = ref() // 搜索的表单
 const exportLoading = ref(false) // 导出的加载中
+const importFormRef = ref() // 导入表单的引用
 
 /** 查询列表 */
 const getList = async () => {
@@ -203,6 +205,11 @@ const handleExport = async () => {
   } finally {
     exportLoading.value = false
   }
+}
+
+/** 导入按钮操作 */
+const handleImport = () => {
+  importFormRef.value.open()
 }
 
 /** 初始化 **/

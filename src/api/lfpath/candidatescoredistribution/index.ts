@@ -41,4 +41,13 @@ export const CandidateScoreDistributionApi = {
   exportCandidateScoreDistribution: async (params) => {
     return await request.download({ url: `/lfpath/candidate-score-distribution/export-excel`, params })
   },
-}
+  // 导入考生分数分布 Excel
+  importCandidateScoreDistribution: async (formData: FormData) => {
+    return await request.post({ url: `/lfpath/candidate-score-distribution/import`, data: formData })
+  },
+
+  // 下载考生分数分布导入模板
+  importCandidateScoreDistributionTemplate: async () => {
+    return await request.download({ url: `/lfpath/candidate-score-distribution/get-import-template` })
+  },
+}
