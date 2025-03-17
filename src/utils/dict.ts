@@ -245,5 +245,8 @@ export enum DICT_TYPE {
   LFPATH_EDUCATION_LEVEL = 'lfpath_education_level', // fpath 办学层次
   LFPATH_EDUCATION_SYSTEM = 'lfpath_education_system' ,//办学体制
   PROVINCES = 'provinces', // 省份
-  LFPATH_YEARS = 'lfpath_years'// 年份
+  LFPATH_YEARS = 'lfpath_years',// 年份
+  LFPATH_MAJOR_LEVEL = 'lfpath_major_level',//高校专业层次
+  LFPATH_MAJOR_DIRECTORY_TYPE = 'lfpath_major_directory_type'//高校专业目录类型
+
 }
